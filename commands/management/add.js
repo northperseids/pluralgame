@@ -1,12 +1,27 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
 const emotes = require('../../utils/emotes');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'add',
     description: 'Add a player!',
     integration_types: [0, 1],
     contexts: [0],
+    options: [
+        {
+            name: 'playername',
+            description: 'Player Name (case sensitive)',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        },
+        {
+            name: 'playeremoji',
+            description: 'Player Emoji (must be a standard Discord emoji - no custom ones, sorry!)',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        }
+    ],
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];

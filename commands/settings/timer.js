@@ -1,12 +1,21 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'timer',
     description: 'Adjust the timer settings.',
     integration_types: [0, 1],
     contexts: [0],
-    subcommand: true,
+    options: [
+        {
+            name: 'timertoggle',
+            description: 'true=enabled, false=disabled',
+            type: ApplicationCommandOptionType.Boolean,
+            required: true
+        }
+    ],
+    type: ApplicationCommandOptionType.Subcommand,
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];

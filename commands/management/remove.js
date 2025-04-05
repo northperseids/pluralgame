@@ -1,12 +1,20 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
-const emotes = require('../../utils/emotes');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'remove',
     description: 'Remove a player from the game.',
     integration_types: [0, 1],
     contexts: [0],
+    options: [
+        {
+            name: 'playername',
+            description: 'Player Name',
+            type: ApplicationCommandOptionType.String,
+            required: true
+        }
+    ],
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];

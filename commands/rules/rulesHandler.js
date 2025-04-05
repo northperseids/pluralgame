@@ -6,6 +6,7 @@ module.exports = {
     description: 'Show rules for each game mode.',
     integration_types: [0, 1],
     contexts: [0],
+    hasSubcommands: true,
     callback: async (client, interaction) => {
         const localCommands = getLocalCommands(path.join(__dirname, '.'));
         try {

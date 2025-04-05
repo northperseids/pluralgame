@@ -1,12 +1,13 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'resetprompts',
     description: 'Reset and clear the prompt queue.',
     integration_types: [0, 1],
     contexts: [0],
-    subcommand: true,
+    type: ApplicationCommandOptionType.Subcommand,
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];

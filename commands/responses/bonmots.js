@@ -1,11 +1,26 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'bonmots',
     description: 'Submit a response for BonMots!',
     integration_types: [0, 1],
     contexts: [0],
+    options: [
+        {
+            name: 'player',
+            description: "What's your playername?",
+            type: ApplicationCommandOptionType.String,
+            required: true
+        },
+        {
+            name: 'response',
+            description: "What's your answer?",
+            type: ApplicationCommandOptionType.String,
+            required: true
+        }
+    ],
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];
@@ -27,8 +42,16 @@ module.exports = {
                 let sysquery = "SELECT playername, playerid FROM players WHERE userid=? AND gameid=?";
                 const sys = await conn.query(sysquery, [interaction.user.id, gameid]);
                 // get the highest question id (qid) from gametracking for this specific game so each response will be associated with that qid
-                let qidquery = "SELECT qid FROM gametracking WHERE gameid=? ORDER BY qid DESC LIMIT 1";
+                let qidquery = "SELECT qid, acceptresponses FROM gametracking WHERE gameid=? ORDER BY qid DESC LIMIT 1";
                 const qid = await conn.query(qidquery, [gameid]);
+
+                // disallow submitting responses if there is no open question
+                if (qid[0]['acceptresponses'] == 0) {
+                    interaction.reply({ content: `There is no question currently accepting responses!`, ephemeral: true });
+                    resolve()
+                    return;
+                }
+
                 if (sys.length > 0) {
                     for (i = 0; i < sys.length; i++) {
 

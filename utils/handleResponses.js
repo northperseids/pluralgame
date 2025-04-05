@@ -118,6 +118,9 @@ module.exports = async (interaction, conn, botmessage, question, gameid, timers,
                 winnerstring = winnerstring + `"${winner.response}" wins with ${winner.tally} vote${s}! (That's ${winner.playername}'s!)\n`;
             });
             interaction.followUp(`Let's see those results!\n\n${question}\n\n${responsestring}\n${winnerstring}`);
+            // close accepting questions
+            let closeQuestion = "UPDATE gametracking SET acceptresponses=0 WHERE qid=?";
+            await conn.query(closeQuestion, [qid[0]['qid']]);
             resolve()
         });
     });
