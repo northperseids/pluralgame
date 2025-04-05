@@ -1,6 +1,5 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const capitalized = require('../../utils/capitalize');
 
 module.exports = {
     name: 'bonmots',
@@ -12,7 +11,7 @@ module.exports = {
         let conn = conns[1];
 
         const prom = new Promise(async (resolve) => {
-            let playername = interaction.options.get('player').value.toLowerCase();
+            let playername = interaction.options.get('player').value;
             let response = interaction.options.get('response').value;
 
             // check for a game session in the current channel
@@ -37,7 +36,7 @@ module.exports = {
                         let entryquery = "SELECT COUNT(*) FROM responses WHERE playername=? AND gameid=? AND qid=?";
                         let entryresults = await conn.query(entryquery, [playername, gameid, qid[0]['qid']]);
                         if (entryresults[0]['COUNT(*)'] >= 1) {
-                            interaction.reply({ content: `Player ${capitalized(playername)} already gave a response!`, ephemeral: true });
+                            interaction.reply({ content: `Player ${playername} already gave a response!`, ephemeral: true });
                             resolve()
                             return;
                         }
@@ -46,7 +45,7 @@ module.exports = {
                             // store response in database
                             let responsequery = "INSERT INTO responses (qid, gameid, playerid, playername, response) VALUES (?, ?, ?, ?, ?)";
                             await conn.query(responsequery, [qid[0]['qid'], gameid, sys[i]['playerid'], sys[i]['playername'], response]);
-                            interaction.reply({ content: `Player ${capitalized(playername)}'s response submitted!`, ephemeral: true });
+                            interaction.reply({ content: `Player ${playername}'s response submitted!`, ephemeral: true });
                             resolve()
                             return;
                         }

@@ -1,7 +1,5 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const hr = require('../../utils/handleResponses');
-const capitalized = require('../../utils/capitalize');
 const { votetimer } = require('../../utils/vals.json');
 
 module.exports = {
@@ -135,7 +133,7 @@ module.exports = {
                                 if (winner.tally > 1) {
                                     s = "s";
                                 }
-                                winnerstring = winnerstring + `**${capitalized(winner.name)}** with ${winner.tally} vote${s}!\n`
+                                winnerstring = winnerstring + `**${winner.name}** with ${winner.tally} vote${s}!\n`
                             });
                             interaction.followUp(`Votes are in!\n\nVoted most likely to ${question}:\n\n` + winnerstring);
                             resolve()

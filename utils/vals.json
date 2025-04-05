@@ -1,7 +1,7 @@
 {
     "embedcolor":"#ff6852",
     "votetimer":30000,
-    "madlibstimer":30000,
+    "responsetimer":30000,
     "truthorlietimer":100000,
     "countemojis":[
         "1️⃣",

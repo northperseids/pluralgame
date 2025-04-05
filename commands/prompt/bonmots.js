@@ -1,8 +1,7 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const hr = require('../../utils/handleResponses');
-const capitalized = require('../../utils/capitalize');
-const { madlibstimer } = require('../../utils/vals.json');
+const handleResponses = require('../../utils/handleResponses');
+const { responsetimer } = require('../../utils/vals.json');
 
 module.exports = {
     name: 'bonmots',
@@ -44,9 +43,7 @@ module.exports = {
                     resolve()
                 } else {
                     let playername = selectedplayer[0]['playername'];
-                    const question = selectedprompt[0]['prompt'].replaceAll('@', capitalized(playername));
-
-                    let timerLength = madlibstimer * selectedplayer.length;
+                    const question = selectedprompt[0]['prompt'].replaceAll('@', playername);
 
                     // add promptid to gametracking to prevent repeats within the same game
                     // this will also generate a unique question ID (qid) from autoincrement
@@ -55,18 +52,17 @@ module.exports = {
 
                     // get the timer
                     let currentStamp = Math.floor(new Date() / 1000);
-                    let timerStamp = currentStamp + timerLength / 1000;
+                    let timerStamp = currentStamp + responsetimer / 1000;
                     let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                     // show the prompt
                     const botmessage = await interaction.reply({ content: `${question}${timers === 1 ? responsecountdown : ""}\n\nUse the command \`/bonmots\` and write your answer!`, fetchReply: true });
 
                     if (timers === 1) {
-                        // run scoring after madlibstimer amount of time, multiplied by number of players
+                        // run scoring after responsetimer amount of time, multiplied by number of players
                         setTimeout(async () => {
-                            hr.handleResponses(interaction, conn, botmessage, question, gameid, timers, client);
-                            resolve();
-                        }, timerLength);
+                            await handleResponses(interaction, conn, botmessage, question, gameid, timers)
+                        }, responsetimer * selectedplayer.length);
                     } else {
                         // get qid (do not put this unnecessarily in setinterval)
                         let qidquery = "SELECT qid FROM gametracking WHERE gameid=? AND promptid=?";
@@ -76,11 +72,9 @@ module.exports = {
                             let check = "SELECT COUNT(*) FROM responses WHERE gameid=? AND qid=?";
                             let result = await conn.query(check, [gameid, qid[0]['qid']]);
                             if (result[0]['COUNT(*)'] == selectedplayer.length) {
-                                hr.handleResponses(interaction, conn, botmessage, question, gameid, timers, client);
+                                await handleResponses(interaction, conn, botmessage, question, gameid, timers);
+                                resolve()
                                 clearInterval(repeater);
-                                resolve();
-                                // does this need a return here if clearInterval is set above?
-                                // return;
                             }
                         }, 5000);
                     }
@@ -88,6 +82,6 @@ module.exports = {
             }
         })
 
-        await prom.then(() => { closeConns(conns) });
+        await prom.then(() => { console.log('closing BonMotsPrompt conns'); closeConns(conns) });
     }
 }

@@ -1,6 +1,5 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const capitalized = require('../../utils/capitalize');
 
 module.exports = {
     name: 'viewplayers',
