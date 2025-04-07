@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 06, 2025 at 03:53 AM
+-- Generation Time: Apr 07, 2025 at 09:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,13 +39,6 @@ CREATE TABLE `games` (
   `acceptplayers` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `games`
---
-
-INSERT INTO `games` (`gameid`, `guildid`, `channelid`, `hostid`, `startdate`, `timers`, `adult`, `system`, `acceptplayers`) VALUES
-(124, '951181256253665300', '1305765025721352222', '214891261570580480', '2025-01-03 14:18:14', 0, 1, NULL, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -55,18 +48,9 @@ INSERT INTO `games` (`gameid`, `guildid`, `channelid`, `hostid`, `startdate`, `t
 CREATE TABLE `gametracking` (
   `qid` int(11) NOT NULL,
   `gameid` int(11) NOT NULL,
-  `promptid` int(11) NOT NULL
+  `promptid` int(11) NOT NULL,
+  `acceptresponses` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `gametracking`
---
-
-INSERT INTO `gametracking` (`qid`, `gameid`, `promptid`) VALUES
-(122, 124, 225),
-(123, 124, 251),
-(124, 124, 151),
-(125, 124, 232);
 
 -- --------------------------------------------------------
 
@@ -84,15 +68,6 @@ CREATE TABLE `players` (
   `userid` tinytext NOT NULL,
   `points` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `players`
---
-
-INSERT INTO `players` (`gameid`, `channelid`, `guildid`, `playerid`, `playername`, `playeremoji`, `userid`, `points`) VALUES
-(124, '1305765025721352222', '951181256253665300', 93, 'v', '⚡', '214891261570580480', 0),
-(124, '1305765025721352222', '951181256253665300', 94, 'v2', '💞', '214891261570580480', 2),
-(124, '1305765025721352222', '951181256253665300', 95, 'z', '👽', '214891261570580480', 0);
 
 -- --------------------------------------------------------
 
@@ -364,13 +339,9 @@ INSERT INTO `prompts` (`promptid`, `gamemode`, `prompt`, `adult`, `system`) VALU
 (258, 2, 'The best way to blow a million dollars:', 0, 0),
 (259, 2, 'The one thing the NSA is tired of watching us type into Google:', 0, 0),
 (260, 2, 'The worst thing to find frozen in an ice cube:', 0, 0),
-(261, 2, 'The worst way to spell Mississippi:', 0, 0),
-(262, 2, 'The real reason the dinosaurs died:', 0, 0),
 (263, 2, 'What two words would passengers never want to hear a pilot say?', 0, 0),
 (264, 2, 'The secret to a happy life:', 0, 0),
-(265, 2, 'A more environment-friendly alternative to toilet paper:', 0, 0),
 (266, 2, 'What bears dream about all winter:', 0, 0),
-(267, 2, 'A very unnecessary surgery:', 0, 0),
 (268, 2, 'A strange thing to keep as a pet:', 0, 0),
 (269, 2, 'In 25 years, people will look back and think we\'re morons for not realizing that ___!', 0, 0),
 (270, 2, 'What will be the hot new fashion trend in 2050?', 0, 0),
@@ -400,15 +371,6 @@ CREATE TABLE `responses` (
   `response` text NOT NULL,
   `response2` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `responses`
---
-
-INSERT INTO `responses` (`qid`, `gameid`, `playerid`, `playername`, `response`, `response2`) VALUES
-(125, 124, 93, 'v', 'one', NULL),
-(125, 124, 94, 'v2', 'two', NULL),
-(125, 124, 95, 'z', 'three', NULL);
 
 --
 -- Indexes for dumped tables
@@ -446,19 +408,19 @@ ALTER TABLE `prompts`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `gameid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `gameid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table `gametracking`
 --
 ALTER TABLE `gametracking`
-  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `qid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=291;
 
 --
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `playerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `playerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT for table `prompts`
