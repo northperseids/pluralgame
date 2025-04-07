@@ -10,7 +10,7 @@ module.exports = {
     options: [
         {
             name: 'player',
-            description: "What's your playername?",
+            description: "Player Name (case-sensitive!)",
             type: ApplicationCommandOptionType.String,
             required: true
         },

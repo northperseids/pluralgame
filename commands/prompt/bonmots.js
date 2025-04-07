@@ -1,6 +1,6 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const handleResponses = require('../../utils/handleResponses');
+const handleResponses = require('../../handlers/handleBMResponses');
 const { responsetimer } = require('../../utils/vals.json');
 const { ApplicationCommandOptionType } = require('discord.js');
 

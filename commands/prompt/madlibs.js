@@ -1,6 +1,6 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const handleResponses = require('../../utils/handleResponses');
+const handleResponses = require('../../handlers/handleBMResponses');
 const { responsetimer } = require('../../utils/vals.json');
 const { ApplicationCommandOptionType } = require('discord.js');
 
@@ -9,7 +9,6 @@ module.exports = {
     description: 'Prompt a round of MadLibs!',
     integration_types: [0, 1],
     contexts: [0],
-    subcommand: true,
     type: ApplicationCommandOptionType.Subcommand,
     callback: async (client, interaction) => {
         const conns = await openConns();

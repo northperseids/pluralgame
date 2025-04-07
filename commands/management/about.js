@@ -12,7 +12,7 @@ module.exports = {
             .setTitle('About')
             .setDescription(`Hello! My name is Thomas, and I'll be your game host.\n
                                 All my games are specifically designed for plural systems (and anyone else with multiple entities who might want to play!) - but anyone can play if they want to!\n
-                                I currently offer two games. Use the buttons below to find out more!`);
+                                I currently offer three games. Use the buttons below to find out more!`);
 
         const howtotext = new EmbedBuilder()
             .setColor(embedcolor)
