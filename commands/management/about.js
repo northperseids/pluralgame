@@ -18,11 +18,11 @@ module.exports = {
             .setColor(embedcolor)
             .setTitle('How-To')
             .setDescription(`**To start a game, run the /start command.** This will open a game associated with the channel the command was run in. Only one game session per channel!\n
-                                    The player who ran the /start command is my **co-host**, and is in charge of choosing and initiating rounds.\n
-                                    **To join the game, use /add** and enter a name and an emoji for each system member participating. (In this game, system-members can play individually! You won't need to do a bunch of switching, though, so long as everyone can communicate with whoever's fronting well enough.)\n
+                                    The player who ran the /start command is in charge of choosing and initiating rounds.\n
+                                    **To join the game, use /add** and enter a name and an emoji for each system member participating. (In this game, system-members can play individually! You shouldn't need to do a bunch of switching so long as everyone can communicate with whoever's fronting well enough.)\n
                                     During voting, a user-account will be allowed as many votes as they have system-members playing, but it's up to each whether that means each member gets to cast a vote individually, or if they want to pool their votes.\n
-                                    The game is set up so that if you have multiple system members who want to vote for the same thing, you can, for example, 'react' then 'unreact' then 'react' again, and that'll cast two votes. (Votes are still capped at the number of participants you have in the game, though, so you can't keep mashing the react button to get infinite votes!)\n
-                                    **I'm still under development, so go easy on me** - I might crash or glitch a lot right now, so please be patient!\n
+                                    Voting is done through reactions. The game is set up so that if you have multiple system members who want to vote for the same thing, you can react multiple times! (Votes are still capped at the number of participants you have in the game, though, so you can't keep mashing the react button to get infinite votes!)\n
+                                    **I'm still under development, so go easy on me** - I might crash or glitch a little right now, so please be patient!\n
                                     *If you have any questions, suggestions, comments, or concerns, please contact @neartsua on discord!*`);
 
         const setuptext = new EmbedBuilder()
@@ -30,14 +30,15 @@ module.exports = {
             .setTitle('Setup')
             .setDescription(`**Commands**
                                     /start - start a game in the current channel
-                                    /close - end the current game
+                                    /end - end the current game
+                                    /closeall - admin-only, end all games in a server
                                     /add - add a player to the current game
                                     /remove - remove a player from the current game
-                                    /prompt mostlikely - start a round of Most Likely
-                                    /prompt madlibs - start a round of MadLibs
-                                    /prompt bonmots - start a round of BonMots
+                                    /prompt [game] - start a round of a chosen game mode
+                                    /rules [game] - show the rules for a chosen game mode
                                     /madlibs - respond to madlibs
                                     /bonmots - respond to bonmots
+                                    /truthorlie - respond to two truths and a lie
                                     /settings - edit configuration for the current game\n
                                     **Configuration Options**
                                     /settings timer - enable or disable timers
@@ -54,8 +55,15 @@ module.exports = {
                                     Your job is to vote for who you think fits the prompt best by reacting to the emojis!\n
                                     **MadLibs**
                                     In this game, I'll show a prompt like 'PLAYER's worst nightmare: "_!'
-                                    Your job is to use the /respond command to fill in the blank or answer the question!
-                                    Players will vote on which response they think is the best at the end of the round.`);
+                                    Your job is to use the /madlibs command to fill in the blank or answer the question!
+                                    Players will vote on which response they think is the best at the end of the round.
+                                    **BonMots**
+                                    In this game, I'll show a prompt and your job is to use the /bonmots command to fill in
+                                    the blank or answer the question! Players will vote on which response they think is the
+                                    best just like in MadLibs.
+                                    **Truth or Lie**
+                                    In this game, each player will need to run the /truthorlie command and submit two truths
+                                    and a lie. Then, players will try to vote on which they think is the lie!`);
 
         let buttons = new ActionRowBuilder()
             .addComponents(

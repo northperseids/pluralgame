@@ -1,11 +1,26 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
+const { ApplicationCommandOptionType } = require('discord.js');
 
 module.exports = {
     name: 'start',
     description: 'Start a game in this channel!',
     integration_types: [0, 1],
     contexts: [0],
+    options: [
+        {
+            name: 'timers',
+            description: 'Enable or disable timers',
+            type: ApplicationCommandOptionType.Boolean,
+            required: true
+        },
+        {
+            name: 'adultcontent',
+            description: 'Enable or disable adult content',
+            type: ApplicationCommandOptionType.Boolean,
+            required: true
+        }
+    ],
     callback: async (client, interaction) => {
         const conns = await openConns();
         let conn = conns[1];
