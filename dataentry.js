@@ -1,33 +1,19 @@
 require('dotenv').config();
-const mariadb = require('mariadb');
+const openConns = require('./utils/openConns');
+const closeConns = require('./utils/closeConns');
 
 async function enterData(gamemode, array, adult, system) {
-    // open pool conn
-    const pool = mariadb.createPool({
-        host: 'localhost',
-        database: 'PluralGame',
-        user: process.env.MDB_USER,
-        password: process.env.MDB_PASS,
-    });
-    // establish connection
-    let conn = await pool.getConnection();
-
+    const conns = openConns();
+    let conn = conns[1];
     console.log('Entering...');
 
     // sql query
     let sql = "INSERT INTO prompts (gamemode, prompt, adult, system) VALUES (?, ?, ?, ?)";
-    try {
-
-        array.forEach((prom) => {
-            conn.query(sql, [gamemode, prom, adult, system]);
-        });
-
-    } catch (err) {
-        console.log(err);
-    } finally {
-        if (conn) conn.end();
-    }
+    array.forEach((prom) => {
+        conn.query(sql, [gamemode, prom, adult, system]);
+    });
     console.log('Finished!');
+    closeConns(conns);
 }
 
 const prompts = [
