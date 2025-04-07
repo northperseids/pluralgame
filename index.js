@@ -21,7 +21,6 @@ const client = new Client({
     ],
 })
 
-
 eventHandler(client); // see ./handlers/eventHandler
 
 client.login(process.env.TOKEN);

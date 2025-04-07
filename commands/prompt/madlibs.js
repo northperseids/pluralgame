@@ -33,7 +33,7 @@ module.exports = {
             } else {
                 // MAIN COMMAND CODE
                 // pick a prompt randomly, excluding prompts already logged in gametracking
-                let promptquery = `SELECT promptid, prompt FROM prompts WHERE gamemode=2 AND NOT EXISTS (SELECT 1 FROM gametracking WHERE gametracking.promptid = prompts.promptid) ${sysquestions === 1 ? "" : "AND system=0"} ${adultcontent === 1 ? "" : "AND adult=0"} ORDER BY RAND() LIMIT 1`;
+                let promptquery = `SELECT promptid, prompt FROM prompts WHERE gamemode=3 AND NOT EXISTS (SELECT 1 FROM gametracking WHERE gametracking.promptid = prompts.promptid) ${sysquestions === 1 ? "" : "AND system=0"} ${adultcontent === 1 ? "" : "AND adult=0"} ORDER BY RAND() LIMIT 1`;
                 const selectedprompt = await conn.query(promptquery);
 
                 // pick random player for prompt
