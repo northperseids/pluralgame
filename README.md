@@ -2,7 +2,7 @@
 
 Discord game bot made specifically so multiple players can participate per Discord account.
 
-![Screenshot of the pluralgame bot showing the Most Likely mode. Text reads Who is most likely to go viral for doing TikTok dances? Jason, Sonya, Izzy, with a lightning bolt, music, and alien emoji representing the players reacted to the image. Next message reads Votes are in! Voted most likely to go viral for doing TikTok dances: Izzy with 3 votes!](./images/madlibs1.png)
+![Screenshot of the pluralgame bot showing the Most Likely mode. Text reads Who is most likely to go viral for doing TikTok dances? Jason, Sonya, Izzy, with a lightning bolt, music, and alien emoji representing the players reacted to the image. Next message reads Votes are in! Voted most likely to go viral for doing TikTok dances: Izzy with 3 votes!](./images/mostlikely.png)
 
 ![Screenshot of the pluralgame bot showing the MadLibs mode. Text reads Sonya's mortal enemy: blank! Responses are in! Vote for your favorite! 1. Off-key music, 2. Bad DMing in D&D AAAA, 3. Bad hot chocolate, with 1, 2, and 3 emojis reacted on the message.](./images/madlibs2.png)
 
