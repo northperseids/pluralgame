@@ -2,7 +2,7 @@ const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
 const handleTruthOrLies = require('../../handlers/handleTLResponses');
 const { responsetimer } = require('../../utils/vals.json');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'truthorlie',
@@ -26,7 +26,7 @@ module.exports = {
                 interaction.reply(`No game found in this channel.\n\nStart a game with /start!`);
                 resolve()
             } else if (game[0]['hostid'] !== interaction.user.id) {
-                interaction.reply({ content: `Only the host can start a prompt!`, ephemeral: true });
+                interaction.reply({ content: `Only the host can start a prompt!`, flags: MessageFlags.Ephemeral });
                 resolve()
             } else {
 
@@ -36,7 +36,7 @@ module.exports = {
                 let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                 // show the prompt
-                const botMessage = await interaction.reply({ content: `Let's play Two Truths and a Lie!\n\nUse the command \`/truthorlie\` to submit two truths and a lie!\n\n${timers === 1 ? responsecountdown : ""}`, fetchReply: true });
+                const botMessage = await interaction.reply({ content: `Let's play Two Truths and a Lie!\n\nUse the command \`/truthorlie\` to submit two truths and a lie!\n\n${timers === 1 ? responsecountdown : ""}`, withResponse: true });
 
                 // set up a unique entry in database for this prompt to generate a qid; promptid=0 will always be truthorlie
                 let recordquestion = "INSERT INTO gametracking (gameid, promptid) VALUES (?, ?)";

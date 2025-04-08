@@ -1,4 +1,5 @@
 const { countemojis, votetimer } = require('../utils/vals.json');
+const { MessageFlags } = require('discord.js');
 
 module.exports = async function handleTruthOrLies(interaction, conn, gameid, timers, client, counter = 0) {
     let iteration = counter;
@@ -10,7 +11,7 @@ module.exports = async function handleTruthOrLies(interaction, conn, gameid, tim
     let responsesquery = "SELECT response, playername, playerid FROM responses WHERE gameid=? AND qid=?";
     let responses = await conn.query(responsesquery, [gameid, qid[0]['qid']]);
     let playercount = responses.length;
-    
+
     const prom = new Promise(async (resolve) => {
         const chainedProm = new Promise(async (resolve) => {
             // handle no responses
@@ -44,7 +45,7 @@ module.exports = async function handleTruthOrLies(interaction, conn, gameid, tim
                 votecountdown = `\nVotes close <t:${voteStamp}:R>!`;
             }
 
-            const botMessage = await interaction.followUp({ content: `Player ${responses[counter].playername} is up!\nVote for whichever you think is the lie!${timers === 1 ? votecountdown : ""}\n\n${responseString}`, fetchReply: true });
+            const botMessage = await interaction.followUp({ content: `Player ${responses[counter].playername} is up!\nVote for whichever you think is the lie!${timers === 1 ? votecountdown : ""}\n\n${responseString}`, withResponse: true });
 
             // bot react with each emoji and cache which emoji was the lie
             let lieEmoji;
@@ -80,7 +81,7 @@ module.exports = async function handleTruthOrLies(interaction, conn, gameid, tim
                 let votesCast = votes.filter((entry) => entry === user.id);
                 if (votesCast.length >= systemPlayers.length) {
                     capVotes = true;
-                    interaction.followUp({ content: `You've voted the max number of times for your system!`, ephemeral: true });
+                    interaction.followUp({ content: `You've voted the max number of times for your system!`, flags: MessageFlags.Ephemeral });
                 }
 
                 // should we disallow voting for yourself? this would disallow system-wide voting for other players in the same system.
@@ -117,11 +118,12 @@ module.exports = async function handleTruthOrLies(interaction, conn, gameid, tim
         await chainedProm;
 
         if (iteration < playercount) {
-            handleTruthOrLies(interaction, conn, gameid, timers, client, iteration);
+            await handleTruthOrLies(interaction, conn, gameid, timers, client, iteration);
         } else {
             interaction.followUp(`No more lies to sleuth out!\n\nPrompt another round with \`/truthorlie\` if you want to play again!`)
             resolve()
         }
+
     });
 
     await prom;

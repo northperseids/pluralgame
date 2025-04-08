@@ -1,5 +1,6 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
+const { MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'end',
@@ -71,7 +72,7 @@ module.exports = {
 
                 resolve()
             } else {
-                interaction.reply({ content: `You aren't the host! The host is the only one who can close the game.`, ephemeral: true });
+                interaction.reply({ content: `You aren't the host! The host is the only one who can close the game.`, flags: MessageFlags.Ephemeral });
                 resolve()
             }
         })

@@ -1,4 +1,5 @@
 const { countemojis, votetimer } = require('../utils/vals.json');
+const { MessageFlags } = require('discord.js');
 
 module.exports = async (interaction, conn, botmessage, question, gameid, timers, client) => {
     const prom = new Promise(async (resolve) => {
@@ -60,7 +61,7 @@ module.exports = async (interaction, conn, botmessage, question, gameid, timers,
             let votesCast = votes.filter((entry) => entry.voter === user.id);
             if (votesCast.length >= systemPlayers.length) {
                 capVotes = true;
-                interaction.followUp({ content: `You've voted the max number of times for your system!`, ephemeral: true });
+                interaction.followUp({ content: `You've voted the max number of times for your system!`, flags: MessageFlags.Ephemeral });
             }
             // otherwise, add voter data
             if (capVotes === false) {

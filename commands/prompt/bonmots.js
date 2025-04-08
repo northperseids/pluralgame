@@ -2,7 +2,7 @@ const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
 const handleResponses = require('../../handlers/handleBMResponses');
 const { responsetimer } = require('../../utils/vals.json');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'bonmots',
@@ -28,7 +28,7 @@ module.exports = {
                 interaction.reply(`No game found in this channel.\n\nStart a game with /start!`);
                 resolve()
             } else if (game[0]['hostid'] !== interaction.user.id) {
-                interaction.reply({ content: `Only the host can start a prompt!`, ephemeral: true });
+                interaction.reply({ content: `Only the host can start a prompt!`, flags: MessageFlags.Ephemeral });
                 resolve()
             } else {
                 // MAIN COMMAND CODE
@@ -57,7 +57,7 @@ module.exports = {
                     let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                     // show the prompt
-                    const botmessage = await interaction.reply({ content: `${question}${timers === 1 ? responsecountdown : ""}\n\nUse the command \`/bonmots\` and write your answer!`, fetchReply: true });
+                    const botmessage = await interaction.reply({ content: `${question}${timers === 1 ? responsecountdown : ""}\n\nUse the command \`/bonmots\` and write your answer!`, withResponse: true });
 
                     if (timers === 1) {
                         // run scoring after responsetimer amount of time, multiplied by number of players

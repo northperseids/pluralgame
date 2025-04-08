@@ -6,14 +6,6 @@ module.exports = async (client, interaction) => {
 
     const localCommands = getCommands();
 
-    // let hasSubcommand;
-    // try {
-    //     hasSubcommand = interaction.options.getSubcommand();
-    // } catch (error) {
-    //     console.log('this is unnecessary')
-    //     hasSubcommand = false;
-    // }
-
     try {
         const commandObject = localCommands.find(cmd => cmd.name === interaction.commandName);
         if (!commandObject) return;

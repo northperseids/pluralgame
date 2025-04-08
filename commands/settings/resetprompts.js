@@ -1,6 +1,6 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'resetprompts',
@@ -21,7 +21,7 @@ module.exports = {
                 interaction.reply(`No game found in this channel.`);
                 resolve()
             } else if (game[0]['hostid'] !== interaction.user.id) {
-                interaction.reply({ content: `Only the host can use this command!`, ephemeral: true });
+                interaction.reply({ content: `Only the host can use this command!`, flags: MessageFlags.Ephemeral });
                 resolve()
             } else {
                 // MAIN COMMAND CODE

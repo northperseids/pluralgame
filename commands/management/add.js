@@ -1,7 +1,7 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
 const emotes = require('../../utils/emotes');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'add',
@@ -30,7 +30,7 @@ module.exports = {
             let playeremoji = emotes(interaction.options.get('playeremoji').value);
 
             if (!playeremoji || !playeremoji[0] || playeremoji.length > 1) {
-                interaction.reply({ content: `Emoji needs to be a single valid emoji!`, ephemeral: true });
+                interaction.reply({ content: `Emoji needs to be a single valid emoji!`, flags: MessageFlags.Ephemeral });
                 resolve()
             } else {
                 // reject if emoji or name already taken
@@ -39,10 +39,10 @@ module.exports = {
                     const playeremojis = await conn.query(emojis, [interaction.channelId, interaction.guildId ? interaction.guildId : interaction.channelId]);
                     for (i = 0; i < playeremojis.length; i++) {
                         if (playeremoji[0] === playeremojis[i]['playeremoji']) {
-                            interaction.reply({ content: `Someone is already using the emoji ${playeremoji[0]}!`, ephemeral: true });
+                            interaction.reply({ content: `Someone is already using the emoji ${playeremoji[0]}!`, flags: MessageFlags.Ephemeral });
                             resolve()
                         } else if (playeremojis[i]['playername'] === playername) {
-                            interaction.reply({ content: `Someone is already using the name ${playername}!`, ephemeral: true });
+                            interaction.reply({ content: `Someone is already using the name ${playername}!`, flags: MessageFlags.Ephemeral });
                             resolve()
                         }
                     }
@@ -56,7 +56,7 @@ module.exports = {
                 try {
                     const count = await conn.query(countmembers, [interaction.channelId, interaction.guildId ? interaction.guildId : interaction.channelId]);
                     if (count[0]['COUNT(*)'] > 10n) {
-                        interaction.reply({ content: `This game is already at 10 players!\n\nStart your own game in a different channel with /start.\n\n(Note that there can only be one game per channel.)`, ephemeral: true });
+                        interaction.reply({ content: `This game is already at 10 players!\n\nStart your own game in a different channel with /start.\n\n(Note that there can only be one game per channel.)`, flags: MessageFlags.Ephemeral });
                         resolve()
                     }
                 } catch (err) {

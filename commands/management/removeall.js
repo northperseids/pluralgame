@@ -1,5 +1,6 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
+const { MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'removeall',
@@ -29,7 +30,7 @@ module.exports = {
                     interaction.reply(`${players[0]['COUNT(*)']} players removed from game!`);
                     resolve()
                 } else {
-                    interaction.reply({ content: `Sorry, no players can be removed that are associated with this account.`, ephemeral: true });
+                    interaction.reply({ content: `Sorry, no players can be removed that are associated with this account.`, flags: MessageFlags.Ephemeral });
                     resolve()
                 }
             }

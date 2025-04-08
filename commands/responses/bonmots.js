@@ -1,6 +1,6 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'bonmots',
@@ -47,7 +47,7 @@ module.exports = {
 
                 // disallow submitting responses if there is no open question
                 if (qid[0]['acceptresponses'] == 0) {
-                    interaction.reply({ content: `There is no question currently accepting responses!`, ephemeral: true });
+                    interaction.reply({ content: `There is no question currently accepting responses!`, flags: MessageFlags.Ephemeral });
                     resolve()
                     return;
                 }
@@ -59,7 +59,7 @@ module.exports = {
                         let entryquery = "SELECT COUNT(*) FROM responses WHERE playername=? AND gameid=? AND qid=?";
                         let entryresults = await conn.query(entryquery, [playername, gameid, qid[0]['qid']]);
                         if (entryresults[0]['COUNT(*)'] >= 1) {
-                            interaction.reply({ content: `Player ${playername} already gave a response!`, ephemeral: true });
+                            interaction.reply({ content: `Player ${playername} already gave a response!`, flags: MessageFlags.Ephemeral });
                             resolve()
                             return;
                         }
@@ -68,16 +68,16 @@ module.exports = {
                             // store response in database
                             let responsequery = "INSERT INTO responses (qid, gameid, playerid, playername, response) VALUES (?, ?, ?, ?, ?)";
                             await conn.query(responsequery, [qid[0]['qid'], gameid, sys[i]['playerid'], sys[i]['playername'], response]);
-                            interaction.reply({ content: `Player ${playername}'s response submitted!`, ephemeral: true });
+                            interaction.reply({ content: `Player ${playername}'s response submitted!`, flags: MessageFlags.Ephemeral });
                             resolve()
                             return;
                         }
                     }
                     // because the above returns if the player is playing, this only fires if playername is NOT found.
-                    interaction.reply({ content: `Player ${playername} not found!`, ephemeral: true });
+                    interaction.reply({ content: `Player ${playername} not found!`, flags: MessageFlags.Ephemeral });
                     resolve()
                 } else {
-                    interaction.reply({ content: `You or your system are not playing in this game!`, ephemeral: true })
+                    interaction.reply({ content: `You or your system are not playing in this game!`, flags: MessageFlags.Ephemeral })
                     resolve()
                 }
             }

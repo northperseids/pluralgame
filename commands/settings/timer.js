@@ -1,6 +1,6 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'timer',
@@ -27,7 +27,7 @@ module.exports = {
             if (game[0]['COUNT(*)'] !== 1n) {
                 interaction.reply(`No game found in this channel.`);
             } else if (game[0]['hostid'] !== interaction.user.id) {
-                interaction.reply({ content: `Only the host can use this command!`, ephemeral: true });
+                interaction.reply({ content: `Only the host can use this command!`, flags: MessageFlags.Ephemeral });
             } else {
                 // MAIN COMMAND CODE
                 let configquery = "UPDATE games SET timers=? WHERE gameid=?";

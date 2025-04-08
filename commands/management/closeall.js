@@ -1,5 +1,6 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
+const { MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'closeall',
@@ -67,7 +68,7 @@ module.exports = {
                     resolve()
                 }
             } else {
-                interaction.reply({ content: `You have to be an admin to run this command!`, ephemeral: true });
+                interaction.reply({ content: `You have to be an admin to run this command!`, flags: MessageFlags.Ephemeral });
                 resolve()
             }
         })

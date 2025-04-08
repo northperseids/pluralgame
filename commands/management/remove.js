@@ -1,6 +1,6 @@
 const closeConns = require('../../utils/closeConns');
 const openConns = require('../../utils/openConns');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'remove',
@@ -44,9 +44,9 @@ module.exports = {
                     resolve()
                 } else {
                     if (host[0]['hostid'] === interaction.user.id) {
-                        interaction.reply({ content: `Sorry, no player by name ${playername}.`, ephemeral: true })
+                        interaction.reply({ content: `Sorry, no player by name ${playername}.`, flags: MessageFlags.Ephemeral })
                     } else {
-                        interaction.reply({ content: `Sorry, no player by name ${playername} associated with this account.`, ephemeral: true })
+                        interaction.reply({ content: `Sorry, no player by name ${playername} associated with this account.`, flags: MessageFlags.Ephemeral })
                     }
                     resolve()
                 }

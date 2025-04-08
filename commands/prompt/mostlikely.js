@@ -1,7 +1,7 @@
 const openConns = require('../../utils/openConns');
 const closeConns = require('../../utils/closeConns');
 const { votetimer } = require('../../utils/vals.json');
-const { ApplicationCommandOptionType } = require('discord.js');
+const { ApplicationCommandOptionType, MessageFlags } = require('discord.js');
 
 module.exports = {
     name: 'mostlikely',
@@ -21,7 +21,7 @@ module.exports = {
                 interaction.reply(`No game found in this channel.\n\nStart a game with /start!`);
                 resolve()
             } else if (game[0]['hostid'] !== interaction.user.id) {
-                interaction.reply({ content: `Only the host can start a prompt!`, ephemeral: true });
+                interaction.reply({ content: `Only the host can start a prompt!`, flags: MessageFlags.Ephemeral });
                 resolve()
             } else {
 
@@ -65,7 +65,7 @@ module.exports = {
                     let msg = `Who is most likely to ${question}?\n\n${textstring}${timers === 1 ? countdown : ""}`;
 
                     // make bot react to message with each of the players' emojis
-                    const botmessage = await interaction.reply({ content: msg, fetchReply: true });
+                    const botmessage = await interaction.reply({ content: msg, withResponse: true });
                     playerlist.forEach(entry => {
                         botmessage.react(`${entry['playeremoji']}`);
                     });
@@ -89,7 +89,7 @@ module.exports = {
                         let votesCast = votes.filter((entry) => entry.voter === user.id);
                         if (votesCast.length >= numPlayers) {
                             capVotes = true;
-                            interaction.followUp({ content: `You've voted the max number of times for your system!`, ephemeral: true });
+                            interaction.followUp({ content: `You've voted the max number of times for your system!`, flags: MessageFlags.Ephemeral });
                         }
                         // otherwise, add voter data
                         if (capVotes === false) {
