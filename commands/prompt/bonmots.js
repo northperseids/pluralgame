@@ -57,7 +57,8 @@ module.exports = {
                     let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                     // show the prompt
-                    const botmessage = await interaction.reply({ content: `${question}${timers === 1 ? responsecountdown : ""}\n\nUse the command \`/bonmots\` and write your answer!`, withResponse: true });
+                    const botreply = await interaction.reply({ content: `${question}${timers === 1 ? responsecountdown : ""}\n\nUse the command \`/bonmots\` and write your answer!`, withResponse: true });
+                    const botmessage = botreply.resource.message;
 
                     if (timers === 1) {
                         // run scoring after responsetimer amount of time, multiplied by number of players

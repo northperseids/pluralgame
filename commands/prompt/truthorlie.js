@@ -36,7 +36,7 @@ module.exports = {
                 let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                 // show the prompt
-                const botMessage = await interaction.reply({ content: `Let's play Two Truths and a Lie!\n\nUse the command \`/truthorlie\` to submit two truths and a lie!\n\n${timers === 1 ? responsecountdown : ""}`, withResponse: true });
+                await interaction.reply({ content: `Let's play Two Truths and a Lie!\n\nUse the command \`/truthorlie\` to submit two truths and a lie!\n\n${timers === 1 ? responsecountdown : ""}` });
 
                 // set up a unique entry in database for this prompt to generate a qid; promptid=0 will always be truthorlie
                 let recordquestion = "INSERT INTO gametracking (gameid, promptid) VALUES (?, ?)";

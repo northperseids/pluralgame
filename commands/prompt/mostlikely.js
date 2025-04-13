@@ -62,10 +62,10 @@ module.exports = {
                     let timerStamp = currentStamp + votetimer / 1000;
                     let countdown = `\n\nVotes close <t:${timerStamp}:R>!`;
 
-                    let msg = `Who is most likely to ${question}?\n\n${textstring}${timers === 1 ? countdown : ""}`;
-
                     // make bot react to message with each of the players' emojis
-                    const botmessage = await interaction.reply({ content: msg, withResponse: true });
+                    const botreply = await interaction.reply({ content: `Who is most likely to ${question}?\n\n${textstring}${timers === 1 ? countdown : ""}`, withResponse: true });
+                    const botmessage = botreply.resource.message;
+                    
                     playerlist.forEach(entry => {
                         botmessage.react(`${entry['playeremoji']}`);
                     });
