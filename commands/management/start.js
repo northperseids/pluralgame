@@ -30,6 +30,7 @@ module.exports = {
             const rows = await conn.query(sql, [interaction.guildId, interaction.channelId]);
             if (rows[0]['COUNT(*)'] == 1) {
                 interaction.reply(`Game is already open in this channel! Either close it or begin play.`);
+                resolve()
             } else {
                 let timersEnabled = interaction.options.get('timers').value === true ? 1 : 0;
                 let adultEnabled = interaction.options.get('adultcontent').value === true ? 1 : 0;
