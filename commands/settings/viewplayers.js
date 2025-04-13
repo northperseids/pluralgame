@@ -28,7 +28,7 @@ module.exports = {
                 const players = await conns[1].query(playersquery, [gameid]);
                 let playerstring = "";
                 players.forEach(player => {
-                    playerstring += `${capitalized(player['playername'])} - ${player['playeremoji']} - ${player['points']} points\n`;
+                    playerstring += `${player['playername']} - ${player['playeremoji']} - ${player['points']} points\n`;
                 });
                 interaction.reply(`**Players:**\n${playerstring}`);
                 resolve()
