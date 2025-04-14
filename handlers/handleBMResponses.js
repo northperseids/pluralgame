@@ -41,7 +41,7 @@ module.exports = async (interaction, conn, botmessage, question, gameid, timers,
         interaction.editReply(`${question}\n\nResponses are in! Vote for your favorite!\n\n${responsestring}${timers === 1 ? votecountdown : ""}`);
 
         // filter out bot's own reactions
-        const filter = (reaction, user) => user.id !== client.user.id;
+        const filter = (reaction, user) => user.id !== '1221276675736604752';
         let collector;
         if (timers === 1) {
             collector = botmessage.createReactionCollector({ filter, time: votetimer, dispose: true });
