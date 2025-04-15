@@ -41,10 +41,12 @@ module.exports = {
                 const selectedplayer = await conn.query(playerquery, [interaction.channelId, interaction.guildId ? interaction.guildId : interaction.channelId]);
                 if (selectedplayer.length === 0) {
                     interaction.reply(`No players have joined!`);
-                    resolve()
+                    resolve();
                 } else {
                     let playername = selectedplayer[0]['playername'];
                     const question = selectedprompt[0]['prompt'].replaceAll('@', playername);
+
+                    let timerLength = responsetimer * selectedplayer.length;
 
                     // add promptid to gametracking to prevent repeats within the same game
                     // this will also generate a unique question ID (qid) from autoincrement
@@ -53,7 +55,7 @@ module.exports = {
 
                     // get the timer
                     let currentStamp = Math.floor(new Date() / 1000);
-                    let timerStamp = currentStamp + responsetimer / 1000;
+                    let timerStamp = currentStamp + timerLength / 1000;
                     let responsecountdown = `\n\nResponses close <t:${timerStamp}:R>!`;
 
                     // show the prompt
@@ -63,8 +65,10 @@ module.exports = {
                     if (timers === 1) {
                         // run scoring after responsetimer amount of time, multiplied by number of players
                         setTimeout(async () => {
-                            await handleResponses(interaction, conn, botmessage, question, gameid, timers)
-                        }, responsetimer * selectedplayer.length);
+                            await handleResponses(interaction, conn, botmessage, question, gameid, timers, client).then(() => {
+                                resolve();
+                            })
+                        }, timerLength);
                     } else {
                         // get qid (do not put this unnecessarily in setinterval)
                         let qidquery = "SELECT qid FROM gametracking WHERE gameid=? AND promptid=?";
@@ -73,10 +77,12 @@ module.exports = {
                         let repeater = setInterval(async () => {
                             let check = "SELECT COUNT(*) FROM responses WHERE gameid=? AND qid=?";
                             let result = await conn.query(check, [gameid, qid[0]['qid']]);
+                            console.log(result[0]['COUNT(*)'], selectedplayer.length)
                             if (result[0]['COUNT(*)'] == selectedplayer.length) {
-                                await handleResponses(interaction, conn, botmessage, question, gameid, timers);
-                                resolve()
                                 clearInterval(repeater);
+                                await handleResponses(interaction, conn, botmessage, question, gameid, timers, client).then(() => {
+                                    resolve();
+                                });
                             }
                         }, 5000);
                     }

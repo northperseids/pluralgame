@@ -41,7 +41,7 @@ module.exports = async (interaction, conn, botmessage, question, gameid, timers,
         interaction.editReply(`${question}\n\nResponses are in! Vote for your favorite!\n\n${responsestring}${timers === 1 ? votecountdown : ""}`);
 
         // filter out bot's own reactions
-        const filter = (reaction, user) => user.id !== '1221276675736604752';
+        const filter = (user) => user.id !== client.user.id;
         let collector;
         if (timers === 1) {
             collector = botmessage.createReactionCollector({ filter, time: votetimer, dispose: true });
@@ -122,7 +122,7 @@ module.exports = async (interaction, conn, botmessage, question, gameid, timers,
             // close accepting questions
             let closeQuestion = "UPDATE gametracking SET acceptresponses=0 WHERE qid=?";
             await conn.query(closeQuestion, [qid[0]['qid']]);
-            resolve()
+            resolve();
         });
     });
 

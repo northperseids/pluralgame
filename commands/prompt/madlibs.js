@@ -78,9 +78,10 @@ module.exports = {
                             let check = "SELECT COUNT(*) FROM responses WHERE gameid=? AND qid=?";
                             let result = await conn.query(check, [gameid, qid[0]['qid']]);
                             if (result[0]['COUNT(*)'] == selectedplayer.length) {
-                                await handleResponses(interaction, conn, botmessage, question, gameid, timers, client);
-                                resolve();
                                 clearInterval(repeater);
+                                await handleResponses(interaction, conn, botmessage, question, gameid, timers, client).then(() => {
+                                    resolve();
+                                });
                             }
                         }, 5000);
                     }
