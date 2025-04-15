@@ -52,18 +52,16 @@ module.exports = {
             .setTitle('Game Modes')
             .setDescription(`**Most Likely**
                                     In this game, I'll show a prompt like 'Who is most likely to fall for an internet scam?'
-                                    Your job is to vote for who you think fits the prompt best by reacting to the emojis!\n
+                                    Your job is to vote for who you think fits the prompt best by reacting to the emojis!
                                     **MadLibs**
                                     In this game, I'll show a prompt like 'PLAYER's worst nightmare: "_!'
-                                    Your job is to use the /madlibs command to fill in the blank or answer the question!
-                                    Players will vote on which response they think is the best at the end of the round.
+                                    Your job is to use the /madlibs command to fill in the blank or answer the question! Players will vote on which response they think is the best at the end of the round.
                                     **BonMots**
-                                    In this game, I'll show a prompt and your job is to use the /bonmots command to fill in
-                                    the blank or answer the question! Players will vote on which response they think is the
-                                    best just like in MadLibs.
+                                    In this game, I'll show a prompt and your job is to use the /bonmots command to fill in the blank or answer the question! Players will vote on which response they think is the best just like in MadLibs.
                                     **Truth or Lie**
-                                    In this game, each player will need to run the /truthorlie command and submit two truths
-                                    and a lie. Then, players will try to vote on which they think is the lie!`);
+                                    In this game, each player will need to run the /truthorlie command and submit two truths and a lie. Then, players will try to vote on which they think is the lie!
+                                    **Trivia Clash**
+                                    In this trivia game, your job isn't to answer correctly - it's to trick your fellow players! I'll show a question, and you write a response that you think will convince the other players it's true - *or* that you think would be the funniest! The more people you get to vote for you, the more points you get!`);
 
         let buttons = new ActionRowBuilder()
             .addComponents(

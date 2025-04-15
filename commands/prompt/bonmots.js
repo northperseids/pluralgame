@@ -38,13 +38,12 @@ module.exports = {
 
                 // pick random player for prompt
                 let playerquery = "SELECT playername, playeremoji FROM players WHERE channelid=? AND guildid=? ORDER BY RAND()";
-                const selectedplayer = await conn.query(playerquery, [interaction.channelId, interaction.guildId ? interaction.guildId : interaction.channelId]);
+                const selectedplayer = await conn.query(playerquery, [interaction.channelId, interaction.guildId]);
                 if (selectedplayer.length === 0) {
                     interaction.reply(`No players have joined!`);
                     resolve();
                 } else {
-                    let playername = selectedplayer[0]['playername'];
-                    const question = selectedprompt[0]['prompt'].replaceAll('@', playername);
+                    const question = selectedprompt[0]['prompt'];
 
                     let timerLength = responsetimer * selectedplayer.length;
 

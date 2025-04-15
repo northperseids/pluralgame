@@ -71,7 +71,7 @@ module.exports = {
                         }, timerLength);
                     } else {
                         // get qid (do not put this unnecessarily in setinterval)
-                        let qidquery = "SELECT qid FROM gametracking WHERE gameid=? AND promptid=?";
+                        let qidquery = "SELECT qid FROM gametracking WHERE gameid=? AND promptid=? ORDER BY qid DESC LIMIT 1";
                         let qid = await conn.query(qidquery, [gameid, selectedprompt[0]['promptid']]);
                         // use setInterval every 5 seconds to check how many responses there are. this may be inefficient. ugh
                         let repeater = setInterval(async () => {
