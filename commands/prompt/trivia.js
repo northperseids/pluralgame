@@ -33,12 +33,14 @@ module.exports = {
                 resolve()
             } else {
                 // MAIN COMMAND CODE
-                // pick a prompt randomly, excluding prompts already logged in gametracking
+
+                // API query instead of DB query
                 // const categories = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 27, 29, 30, 31, 32];
                 // const category = categories.sort((a, b) => 0.5 - Math.random())[0];
                 // let promptquery = await fetch(`https://opentdb.com/api.php?amount=1&category=${category}&type=multiple`);
                 // const selectedprompt = await promptquery.json();
 
+                // pick a prompt randomly, excluding prompts already logged in gametracking
                 let promptquery = `SELECT promptid, prompt, answer FROM prompts WHERE gamemode=4 AND NOT EXISTS (SELECT 1 FROM gametracking WHERE gametracking.promptid = prompts.promptid) ${sysquestions === 1 ? "" : "AND system=0"} ${adultcontent === 1 ? "" : "AND adult=0"} ORDER BY RAND() LIMIT 1`;
                 const selectedprompt = await conn.query(promptquery);
 
