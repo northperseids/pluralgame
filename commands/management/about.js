@@ -10,24 +10,23 @@ module.exports = {
         const abouttext = new EmbedBuilder()
             .setColor(embedcolor)
             .setTitle('About')
-            .setDescription(`Hello! My name is Thomas, and I'll be your game host.\n
-                                All my games are specifically designed for plural systems (and anyone else with multiple entities who might want to play!) - but anyone can play if they want to!\n
-                                I currently offer three games. Use the buttons below to find out more!`);
+            .setDescription(`Hello! I am a game host bot.\n
+                                All my games are specifically designed for systems - but anyone can play if they want to!\n
+                                I currently offer five games. Use the buttons below to find out more!`);
 
         const howtotext = new EmbedBuilder()
             .setColor(embedcolor)
             .setTitle('How-To')
             .setDescription(`**To start a game, run the /start command.** This will open a game associated with the channel the command was run in. Only one game session per channel!\n
-                                    The player who ran the /start command is in charge of choosing and initiating rounds.\n
-                                    **To join the game, use /add** and enter a name and an emoji for each system member participating. (In this game, system-members can play individually! You shouldn't need to do a bunch of switching so long as everyone can communicate with whoever's fronting well enough.)\n
-                                    During voting, a user-account will be allowed as many votes as they have system-members playing, but it's up to each whether that means each member gets to cast a vote individually, or if they want to pool their votes.\n
-                                    Voting is done through reactions. The game is set up so that if you have multiple system members who want to vote for the same thing, you can react multiple times! (Votes are still capped at the number of participants you have in the game, though, so you can't keep mashing the react button to get infinite votes!)\n
+                                    **The player who ran the /start command is in charge of choosing and initiating rounds.** Pick a prompt with the /prompt [game] commands once every player has been added.\n
+                                    **To join the game, use /add** and enter a name and an emoji for the system member participating. (In this game, system-members can play individually! You shouldn't need to do a bunch of switching so long as everyone can communicate with whoever's fronting well enough.)\n
+                                    **Vote by reacting!** During voting, a user-account will be allowed as many votes as they have system-members playing, so each system-member can cast a vote.\n
                                     **I'm still under development, so go easy on me** - I might crash or glitch a little right now, so please be patient!\n
                                     *If you have any questions, suggestions, comments, or concerns, please contact @neartsua on discord!*`);
 
         const setuptext = new EmbedBuilder()
             .setColor(embedcolor)
-            .setTitle('Setup')
+            .setTitle('Commands')
             .setDescription(`**Commands**
                                     /start - start a game in the current channel
                                     /end - end the current game
@@ -36,9 +35,10 @@ module.exports = {
                                     /remove - remove a player from the current game
                                     /prompt [game] - start a round of a chosen game mode
                                     /rules [game] - show the rules for a chosen game mode
-                                    /madlibs - respond to madlibs
-                                    /bonmots - respond to bonmots
-                                    /truthorlie - respond to two truths and a lie
+                                    /madlibs - respond to MadLibs
+                                    /bonmots - respond to BonMots
+                                    /truthorlie - respond to Truth or Lie
+                                    /trivia - respond to Trivia Clash
                                     /settings - edit configuration for the current game\n
                                     **Configuration Options**
                                     /settings timer - enable or disable timers
@@ -51,15 +51,14 @@ module.exports = {
             .setColor(embedcolor)
             .setTitle('Game Modes')
             .setDescription(`**Most Likely**
-                                    In this game, I'll show a prompt like 'Who is most likely to fall for an internet scam?'
-                                    Your job is to vote for who you think fits the prompt best by reacting to the emojis!
+                                    In this game, I'll show a prompt like 'Who is most likely to fall for an internet scam?' Your job is to vote for who you think fits the prompt best by reacting to the emojis!\n
                                     **MadLibs**
-                                    In this game, I'll show a prompt like 'PLAYER's worst nightmare: "_!'
-                                    Your job is to use the /madlibs command to fill in the blank or answer the question! Players will vote on which response they think is the best at the end of the round.
+                                    In this game, I'll show a prompt like 'PLAYER's worst nightmare: \_\_\_!'
+                                    Your job is to use the /madlibs command to fill in the blank or answer the question! Players will vote on which response they think is the best at the end of the round.\n
                                     **BonMots**
-                                    In this game, I'll show a prompt and your job is to use the /bonmots command to fill in the blank or answer the question! Players will vote on which response they think is the best just like in MadLibs.
+                                    In this game, I'll show a prompt and your job is to use the /bonmots command to fill in the blank or answer the question! Players will vote on which response they think is the best just like in MadLibs.\n
                                     **Truth or Lie**
-                                    In this game, each player will need to run the /truthorlie command and submit two truths and a lie. Then, players will try to vote on which they think is the lie!
+                                    In this game, use the /truthorlie command and submit two truths and a lie. Then, players will try to vote on which they think is the lie!\n
                                     **Trivia Clash**
                                     In this trivia game, your job isn't to answer correctly - it's to trick your fellow players! I'll show a question, and you write a response that you think will convince the other players it's true - *or* that you think would be the funniest! The more people you get to vote for you, the more points you get!`);
 
@@ -74,8 +73,8 @@ module.exports = {
                     .setLabel('How To')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
-                    .setCustomId('setup')
-                    .setLabel('Setup')
+                    .setCustomId('commands')
+                    .setLabel('Commands')
                     .setStyle(ButtonStyle.Primary),
                 new ButtonBuilder()
                     .setCustomId('gamemodes')
@@ -98,7 +97,7 @@ module.exports = {
                 await listen1.deferUpdate();
                 await listen1.editReply({ embeds: [howtotext], components: [buttons] })
             }
-            if (listen1.customId === 'setup') {
+            if (listen1.customId === 'commands') {
                 await listen1.deferUpdate();
                 await listen1.editReply({ embeds: [setuptext], components: [buttons] })
             }
