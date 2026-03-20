@@ -1,4 +1,3 @@
-const path = require('path')
 const getCommands = require("../../utils/getCommands");
 
 module.exports = async (client, interaction) => {

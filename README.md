@@ -42,3 +42,8 @@ the lie by reacting to the messages.
 ###
 
 If you run into issues, please contact @neartsua on discord and/or [join the support server](https://discord.gg/u3zB6z4bkC).
+
+<details>
+<summary>(internal CCID)</summary>
+CCID.03.03.JS.PluralGame.0&V-0&R-3&G
+</details>
